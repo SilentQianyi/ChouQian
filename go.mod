@@ -2,7 +2,10 @@ module chouQian-GoZero
 
 go 1.21
 
-require github.com/zeromicro/go-zero v1.5.5
+require (
+	github.com/SilentQianyi/parseJson v1.0.0
+	github.com/zeromicro/go-zero v1.5.5
+)
 
 require (
 	github.com/beorn7/perks v1.0.1 // indirect

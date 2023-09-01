@@ -1,7 +1,6 @@
 package util
 
 import (
-	"chouQian-GoZero/config"
 	"github.com/zeromicro/go-zero/core/collection"
 	"math/rand"
 )
@@ -11,10 +10,7 @@ type Utils struct {
 	MemoryCache *collection.Cache
 }
 
-func InitUtils(cfg *config.Config) (*Utils, error) {
-
-	initLog(cfg)
-
+func InitUtils() (*Utils, error) {
 	memoryCache, err := initMemoryCache()
 	if err != nil {
 		return nil, err

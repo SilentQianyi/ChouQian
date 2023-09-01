@@ -1,6 +1,6 @@
 Name: "ChouQian"
 HttpHost: "localhost"
-HttpPort: "1234"
+HttpPort: 1234
 LogMode: "file"
 LogPath: "./logs/chouQian.log"
 LogKeepDays: 100

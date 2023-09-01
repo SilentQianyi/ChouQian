@@ -1,11 +1,11 @@
 package config
 
 import (
-	"encoding/json"
+	"context"
 	"flag"
+	"github.com/zeromicro/go-zero/core/logc"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/rest"
-	"os"
 )
 
 type Config struct {
@@ -16,11 +16,15 @@ type Config struct {
 	GuanYinQianWen GuanYinQianWenList
 }
 
-func Init() *Config {
+func Init() (*Config, error) {
 	flag.Parse()
 
 	baseConfig := initBaseConfig()
-	guanYinQianWenList := initGuanYinQianWen()
+	guanYinQianWenList, err := initGuanYinQianWen()
+	if err != nil {
+		logc.Errorf(context.Background(), "config init initGuanYinQianWen error! err[ %s ]", err.Error())
+		return nil, err
+	}
 
 	httpConfig := rest.RestConf{
 		Host: baseConfig.HttpHost,
@@ -39,28 +43,5 @@ func Init() *Config {
 		LogConfig:      logConfig,
 		BaseConfig:     baseConfig,
 		GuanYinQianWen: guanYinQianWenList,
-	}
-}
-
-func readFile(fileName string) (b []byte, err error) {
-	b, err = os.ReadFile(fileName)
-	if err != nil {
-		return nil, err
-	}
-
-	return b, nil
-}
-
-func parseTable(fileName string, i interface{}) error {
-	b, e := readFile(fileName)
-	if e != nil {
-		return e
-	}
-	e = json.Unmarshal(b, i)
-	if e != nil {
-		return e
-	}
-
-	//logs.Info("initialize", name, " successful")
-	return nil
+	}, nil
 }

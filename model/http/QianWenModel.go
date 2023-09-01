@@ -5,7 +5,6 @@ type QianWenReq struct {
 }
 
 type QianWen struct {
-	ShunXu  string `json:"shunXu"`
 	QianWen string `json:"qianWen"`
 	JiXiong string `json:"jiXiong"`
 	GongWei string `json:"gongWei"`

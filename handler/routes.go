@@ -2,8 +2,8 @@
 package handler
 
 import (
-	"net/http"
 	"github.com/zeromicro/go-zero/rest"
+	"net/http"
 )
 
 func RegisterHandlers(server *rest.Server, httpHandler *Handler) {
@@ -12,7 +12,7 @@ func RegisterHandlers(server *rest.Server, httpHandler *Handler) {
 			{
 				Method:  http.MethodPost,
 				Path:    "/chat/qianWen",
-				Handler: httpHandler.QianWen.(),
+				Handler: httpHandler.QianWen.Chou(),
 			},
 		},
 	)

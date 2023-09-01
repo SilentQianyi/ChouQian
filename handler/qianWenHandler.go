@@ -35,7 +35,6 @@ func (h QianWenHandler) Chou() http.HandlerFunc {
 		qianWen := h.service.QianWen.Chou(r.Context(), accountId)
 		resp := &model.QianWenRsp{
 			QianWen: &model.QianWen{
-				ShunXu:  qianWen.ShunXu,
 				QianWen: qianWen.QianWen,
 				JiXiong: qianWen.JiXiong,
 				GongWei: qianWen.GongWei,

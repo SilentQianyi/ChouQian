@@ -2,9 +2,12 @@ package config
 
 import (
 	"chouQian-GoZero/util"
-	"flag"
-	"github.com/zeromicro/go-zero/core/conf"
-	"github.com/zeromicro/go-zero/core/logx"
+	"context"
+	"fmt"
+	"github.com/SilentQianyi/parseJson"
+	"github.com/zeromicro/go-zero/core/logc"
+	"log"
+	"path/filepath"
 )
 
 type GuanYinQianWen struct {
@@ -21,17 +24,22 @@ type GuanYinQianWen struct {
 
 type GuanYinQianWenList []*GuanYinQianWen
 
-func initGuanYinQianWen() GuanYinQianWenList {
-	configFile := flag.String("guanYinQianWen", "config/qianWen/test.json", "the json file")
+func initGuanYinQianWen() (GuanYinQianWenList, error) {
+	fpath, err := filepath.Abs("config/qianWen")
+	if err != nil {
+		log.Fatalf("parse conf: %s failed, %s", fpath, err.Error())
+	}
 
-	logx.Infof("configFile[ %s ]", *configFile)
+	filename := fmt.Sprintf("%v/%v", fpath, "guanYinQianWen.json")
 
-	//list := make(map[string]GuanYinQianWen)
-	//qianWen := &GuanYinQianWen{}
 	list := make([]*GuanYinQianWen, 0)
-	conf.MustLoad(*configFile, &list)
+	err = parseJson.ParseTable(filename, &list)
+	if err != nil {
+		logc.Errorf(context.Background(), "initGuanYinQianWen parseJson.ParseTable error! err[ %s ]", err.Error())
+		return nil, err
+	}
 
-	return make([]*GuanYinQianWen, 0)
+	return list, nil
 }
 
 func (list GuanYinQianWenList) Random(utils *util.Utils) *GuanYinQianWen {
