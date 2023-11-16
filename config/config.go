@@ -1,19 +1,26 @@
 package config
 
 import (
-	"context"
 	"flag"
-	"github.com/zeromicro/go-zero/core/logc"
-	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/rest"
+	"log"
 )
 
 type Config struct {
 	HttpConfig rest.RestConf
-	LogConfig  logx.LogConf
 
+	LogConfig      *LogConfig
 	BaseConfig     *BaseConfig
 	GuanYinQianWen GuanYinQianWenList
+}
+
+type LogConfig struct {
+	Filename     string `json:"Filename"`
+	MaxSize      int    `json:"MaxSize"`
+	MaxAge       int    `json:"MaxAge"`
+	MaxBackups   int    `json:"MaxBackups"`
+	Compress     bool   `json:"Compress"`
+	RotationTime int    `json:"RotationTime"`
 }
 
 func Init() (*Config, error) {
@@ -22,7 +29,7 @@ func Init() (*Config, error) {
 	baseConfig := initBaseConfig()
 	guanYinQianWenList, err := initGuanYinQianWen()
 	if err != nil {
-		logc.Errorf(context.Background(), "config init initGuanYinQianWen error! err[ %s ]", err.Error())
+		log.Fatalf("config init initGuanYinQianWen error! err[ %s ]", err.Error())
 		return nil, err
 	}
 
@@ -30,12 +37,13 @@ func Init() (*Config, error) {
 		Host: baseConfig.HttpHost,
 		Port: baseConfig.HttpPort,
 	}
-	logConfig := logx.LogConf{
-		ServiceName: baseConfig.Name,
-		Mode:        baseConfig.LogMode,
-		KeepDays:    baseConfig.LogKeepDays,
-		Level:       baseConfig.LogLevel,
-		Path:        baseConfig.LogPath,
+	logConfig := &LogConfig{
+		Filename:     baseConfig.LogPath,
+		MaxSize:      baseConfig.LogMaxSize * 1024 * 1024,
+		MaxAge:       baseConfig.LogMaxAge,
+		MaxBackups:   baseConfig.LogMaxBackups,
+		Compress:     baseConfig.LogCompress,
+		RotationTime: baseConfig.LogRotationTime,
 	}
 
 	return &Config{

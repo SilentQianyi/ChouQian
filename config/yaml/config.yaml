@@ -1,7 +1,9 @@
 Name: "ChouQian"
 HttpHost: "localhost"
 HttpPort: 1234
-LogMode: "file"
 LogPath: "./logs/chouQian.log"
-LogKeepDays: 100
-LogLevel: "info"
+LogMaxSize: 100
+LogMaxAge: 30
+LogCompress: false
+LogMaxBackups: 10
+LogRotationTime: 24

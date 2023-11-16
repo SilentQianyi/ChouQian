@@ -5,7 +5,6 @@ import (
 	"chouQian-GoZero/util"
 	"context"
 	"fmt"
-	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type QianWenService struct {
@@ -26,8 +25,7 @@ func (s *QianWenService) GuanYinQianWenKey(accountId int64) string {
 }
 
 func (s *QianWenService) Chou(ctx context.Context, accountId int64) (qianWen *config.GuanYinQianWen) {
-	ctx = logx.ContextWithFields(ctx, logx.Field("path", "service.QianWen.Chou"))
-
+	//ctx = context.WithValue(ctx, "path", "service.QianWen.Chou")
 	key := s.GuanYinQianWenKey(accountId)
 	cache, ok := s.utils.MemoryCache.Get(key)
 	if ok {

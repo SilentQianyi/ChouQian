@@ -2,10 +2,8 @@ package config
 
 import (
 	"chouQian-GoZero/util"
-	"context"
 	"fmt"
 	"github.com/SilentQianyi/parseJson"
-	"github.com/zeromicro/go-zero/core/logc"
 	"log"
 	"path/filepath"
 )
@@ -35,7 +33,7 @@ func initGuanYinQianWen() (GuanYinQianWenList, error) {
 	list := make([]*GuanYinQianWen, 0)
 	err = parseJson.ParseTable(filename, &list)
 	if err != nil {
-		logc.Errorf(context.Background(), "initGuanYinQianWen parseJson.ParseTable error! err[ %s ]", err.Error())
+		log.Fatalf("initGuanYinQianWen parseJson.ParseTable error! err[ %s ]", err.Error())
 		return nil, err
 	}
 

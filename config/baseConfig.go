@@ -6,13 +6,15 @@ import (
 )
 
 type BaseConfig struct {
-	Name        string `json:"Name"`
-	HttpHost    string `json:"HttpHost"`
-	HttpPort    int    `json:"HttpPort"`
-	LogMode     string `json:"LogMode"`
-	LogKeepDays int    `json:"LogKeepDays"`
-	LogLevel    string `json:"LogLevel"`
-	LogPath     string `json:"LogPath"`
+	Name            string `json:"Name"`
+	HttpHost        string `json:"HttpHost"`
+	HttpPort        int    `json:"HttpPort"`
+	LogPath         string `json:"LogPath"`
+	LogMaxSize      int    `json:"LogMaxSize"`
+	LogMaxAge       int    `json:"LogMaxAge"`
+	LogCompress     bool   `json:"LogCompress"`
+	LogMaxBackups   int    `json:"LogMaxBackups"`
+	LogRotationTime int    `json:"LogRotationTime"`
 }
 
 func initBaseConfig() *BaseConfig {
